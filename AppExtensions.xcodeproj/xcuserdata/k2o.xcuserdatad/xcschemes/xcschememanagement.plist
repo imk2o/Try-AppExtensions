@@ -4,10 +4,30 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>ActionExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>AppExtensions.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>PhotoEditingExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>ShareExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>TodayExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -23,6 +43,26 @@
 			<true/>
 		</dict>
 		<key>B147C8C61CF094B4000E74D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B147C8DC1CF095A2000E74D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B147C8F21CF09B0F000E74D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B147C9041CF09B6C000E74D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B147C9161CF1315C000E74D2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
