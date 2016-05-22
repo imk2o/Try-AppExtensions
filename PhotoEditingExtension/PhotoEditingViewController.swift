@@ -100,7 +100,7 @@ class PhotoEditingViewController: UIViewController, PHContentEditingController {
             }
             let filteredImage = ciInputImage.createVignetteFilteredImage(inputIntensity, context: self.ciContext)
 
-            // JPEGファイルを出力
+            // JPEGファイルを出力 (TODO: CIImageから直接JPEGファイルを出力する方法はあるのか？)
             guard let JPEGData = UIImageJPEGRepresentation(filteredImage, 0.8) else {
                 return	// FIXME
             }
