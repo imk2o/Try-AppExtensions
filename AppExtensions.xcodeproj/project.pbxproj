@@ -843,6 +843,7 @@
 				B147C8D21CF094B4000E74D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B147C8D31CF094B4000E74D2 /* Build configuration list for PBXNativeTarget "AppExtensionsTests" */ = {
 			isa = XCConfigurationList;
@@ -851,6 +852,7 @@
 				B147C8D51CF094B4000E74D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B147C8D61CF094B4000E74D2 /* Build configuration list for PBXNativeTarget "AppExtensionsUITests" */ = {
 			isa = XCConfigurationList;
@@ -859,6 +861,7 @@
 				B147C8D81CF094B4000E74D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B147C8EB1CF095A2000E74D2 /* Build configuration list for PBXNativeTarget "TodayExtension" */ = {
 			isa = XCConfigurationList;
@@ -867,6 +870,7 @@
 				B147C8ED1CF095A2000E74D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B147C9101CF09B6D000E74D2 /* Build configuration list for PBXNativeTarget "ActionExtension" */ = {
 			isa = XCConfigurationList;
@@ -875,6 +879,7 @@
 				B147C9121CF09B6D000E74D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B147C9261CF1315D000E74D2 /* Build configuration list for PBXNativeTarget "PhotoEditingExtension" */ = {
 			isa = XCConfigurationList;
@@ -883,6 +888,7 @@
 				B147C9281CF1315D000E74D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
