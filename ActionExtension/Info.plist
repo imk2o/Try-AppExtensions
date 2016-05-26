@@ -28,11 +28,18 @@
 		<dict>
 			<key>NSExtensionActivationRule</key>
 			<string>TRUEPREDICATE</string>
+			<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
+			<integer>1</integer>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.ui-services</string>
+	</dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 	</dict>
 </dict>
 </plist>

@@ -11,41 +11,30 @@ import MobileCoreServices
 
 class ActionViewController: UIViewController {
 
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var captureButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        // Get the item[s] we're handling from the extension context.
-        
-        // For example, look for an image and place it into an image view.
-        // Replace this with something appropriate for the type[s] your extension supports.
-        var imageFound = false
-        for item: AnyObject in self.extensionContext!.inputItems {
-            let inputItem = item as! NSExtensionItem
-            for provider: AnyObject in inputItem.attachments! {
-                let itemProvider = provider as! NSItemProvider
-                if itemProvider.hasItemConformingToTypeIdentifier(kUTTypeImage as String) {
-                    // This is an image. We'll load it, then place it in our image view.
-                    weak var weakImageView = self.imageView
-                    itemProvider.loadItemForTypeIdentifier(kUTTypeImage as String, options: nil, completionHandler: { (imageURL, error) in
-                        NSOperationQueue.mainQueue().addOperationWithBlock {
-                            if let strongImageView = weakImageView {
-                                if let imageURL = imageURL as? NSURL {
-                                    strongImageView.image = UIImage(data: NSData(contentsOfURL: imageURL)!)
-                                }
-                            }
-                        }
-                    })
-                    
-                    imageFound = true
-                    break
+
+        // 1つのアイテムを抽出(Info.plistの設定により制限されている)
+        guard
+            let item = self.extensionContext?.inputItems.first as? NSExtensionItem,
+            let itemProvider = item.attachments?.first as? NSItemProvider
+        else {
+            return
+        }
+
+        // アイテムからURLを抽出
+        if itemProvider.hasItemConformingToTypeIdentifier(kUTTypeURL as String) {
+            itemProvider.loadItemForTypeIdentifier(kUTTypeURL as String, options: nil) { [weak self] (item, error) in
+                if let error = error {
+                    self?.extensionContext?.cancelRequestWithError(error)
+                } else if let URL = item as? NSURL {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self?.loadURL(URL)
+                    }
                 }
-            }
-            
-            if (imageFound) {
-                // We only handle one image, so stop looking for more.
-                break
             }
         }
     }
@@ -55,10 +44,53 @@ class ActionViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func done() {
-        // Return any edited content to the host app.
-        // This template doesn't do anything, so we just echo the passed in items.
-        self.extensionContext!.completeRequestReturningItems(self.extensionContext!.inputItems, completionHandler: nil)
+    @IBAction func cancel() {
+        self.extensionContext?.completeRequestReturningItems(nil, completionHandler: nil)
+    }
+    
+    @IBAction func capture() {
+        self.captureWebViewAndComplete()
+    }
+    
+    private func loadURL(URL: NSURL) {
+        self.webView.loadRequest(NSURLRequest(URL: URL))
     }
 
+    // Webページをキャプチャする
+    // http://hack.sonix.asia/archives/936
+    private func captureWebViewAndComplete() {
+        let originalFrame = self.webView.frame
+        
+        var frame = self.webView.frame;
+        frame.size.height = self.webView.sizeThatFits(UIScreen.mainScreen().bounds.size).height
+        self.webView.frame = frame
+
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            fatalError()
+        }
+        self.webView.layer.renderInContext(context)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        // restore frame
+        self.webView.frame = originalFrame
+        
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(ActionViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+
+    // キャプチャ画像保存完了ハンドラ
+    func image(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeMutablePointer<Void>) {
+        if let error = error {
+            self.extensionContext?.cancelRequestWithError(error)
+        } else {
+            self.extensionContext?.completeRequestReturningItems(nil, completionHandler: nil)
+        }
+    }
+}
+
+extension ActionViewController: UIWebViewDelegate {
+    func webViewDidFinishLoad(webView: UIWebView) {
+        self.captureButton.enabled = true
+    }
 }
